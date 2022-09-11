@@ -8,7 +8,7 @@ body{
     font-weight: 700;
     font-size: 5rem;
 }
-h1, h3, option, select,li, button{
+h1, h3, option, p,select, button{
     font-family: 'Roboto Slab', serif;
     font-weight: 500;
 }
@@ -29,6 +29,22 @@ select,#search{
     justify-content: center;
 
 }
-li{
-   font-size:3rem; 
+ 
+
+#dispResult{
+    z-index: 5;
+   font-size:1rem; 
+   display: flex !important;
+   flex-direction: column !important;
+justify-content: center !important;
+
+
+}
+.imgContainer{
+    overflow: hidden;
+
+}
+.imgContainer img{
+    width: 30vw;
+    height:30vh;
 }

@@ -1,134 +1,149 @@
 var products = [
 
     {
-        itemName: "Wallets",
-        itemValue: {
+        Category: "Wallet",
+        Title: "Bifold Wallet",
+        leatherType: "Veg-Tanned leather",
+        Price: "3000Rs",
+        imgurl: "img/bfw.jpeg"
 
-            subItemName: "Bifold",
-            subItemValue: {
-                title: "Bifold Wallet" ,
-                leatherType: "Veg-Tanned leather",
-                price: "3000Rs"
-            },
+    },
+    {
 
-            subItemName: "Long",
-            subItemValue: {
-                title: "Long Wallet",
-                leatherType: "Oil Pull-up leather",
-                price: "3500Rs"
-            }
-        }
+        Category: "Wallet",
+        Title: "Long Wallet",
+        leatherType: "Oil Pull-up leather",
+        Price: "3500Rs",
+        imgurl: "img/lw.jpeg"
+
     }
 
 
     ,
 
     {
-        itemName: "Bags",
-        itemValue:
-        {
-            subItemName: "File",
-            subItemValue: {
-                title: "File Bag",
-                leatherType: "Grain-Real leather",
-                price: "15000Rs"
-                         },
-            subItemName: "Satchel",
-            subItemValue: {
-                title: "Satchel Bag",
-                leathherType: "Grain-Real leather",
-                price: "21000Rs"
-                             }
-        }
+
+        Category: "Bag",
+        Title: "File Bag",
+        leatherType: "Grain-Real leather",
+        Price: "15000Rs",
+        imgurl: "img/fb.jpeg"
+
+    },
+    {
+        Category: "Bag",
+        Title: "Satchel Bag",
+        leathherType: "Grain-Real leather",
+        Price: "21000Rs",
+        imgurl: "img/sb.jpeg"
+    },
+
+    {
+        Category: "Belt",
+        Title: "Machine-Waxed Belt",
+        Size: "35mm",
+        Price: "4000Rs",
+        imgurl: "img/b3.jpeg"
+    },
+    {
+
+
+        Category: "Belt",
+
+        Title: "Buffalo Leather Belt",
+        Size: "40mm",
+        Price: "5000Rs",
+        imgurl: "img/b1.jpeg"
+    },
+    {
+
+        Category: "Belt",
+
+        Title: "Italian Imported Belt",
+        Size: "40mm",
+        Price: "6000Rs",
+        imgurl: "img/b2.jpeg"
+
     }
 
-    //    { Belts: {
-    //         Casual: {
-    //             title: "Machine-Waxed Belt",
-    //             size: "35mm",
-    //             price: "4000Rs"
-    //         },
-    //         Formal: {
-    //             title: "Buffalo Leather Belt",
-    //             size: "40mm",
-    //             price: "5000Rs"
-    //         },
-    //         ExtraFormal: {
-    //             title: "Italian Imported Belt",
-    //             size: "40mm",
-    //             price: "6000Rs"
-
-    //         }
-
-    //     }}
 
 ]
 
 
-
 let productType = document.getElementById('productType')
 let productCategory = document.getElementById('productCategory')
-// let productKeys = Object.keys(products) //walets bags
-var productValues
-var searchItem
-var ptInd, pcInd;
+let remDup
+let filteredArr, searchedProd
 
-// const  {Bifold,Long}=Wallets;
-// console.log(Bifold)
+let ptInd, pcInd;
+
 function fillProductType() {
-    // console.log(productKeys)
-    // productType.innerHTML += `<option id="temp">Product Type</option>`
 
-    for (i = 0; i < products.length; i++) {
 
-        productType.innerHTML += `<option>${products[i].itemName}</option>`
+    let mainCat = products.map(function (value) {
+        //console.log(value.Category)
+        return value.Category
+    })
+    //console.log("mainCat here")
+    //console.log(mainCat)
+    remDup = [...new Set(mainCat)]
+    //console.log(remDup)
+
+    for (i = 0; i < remDup.length; i++) {
+
+        productType.innerHTML += `<option>${remDup[i]}</option>`
     }
-    ptInd = productType.selectedIndex
-    console.log(ptInd)
 }
 fillProductType();
 
 
-
-var executed = false
 function fillProductCategory() {
 
     productCategory.innerHTML = ""
-
     ptInd = productType.selectedIndex
-    productValues = Object.keys(Object.values(products)[ptInd]) //{bifold: {…}, long: {…}}
-    productCategory.disabled = false;
-    console.log(ptInd, productValues)
-    // let b= products.filter(function (x,i){
-    //    return 
-    productCategory.innerHTML += `<option>${products[0].itemValue.subItemName}</option>`
 
-    // })
-    for (i = 0; i < products.length; i++) {
-        console.log()
-        productCategory.innerHTML += `<option>${products[1].itemValue.subItemName}</option>`
+    productCategory.disabled = false;
+    //console.log("ptInd here")
+
+    //console.log(ptInd)
+    filteredArr = products.filter(x => x.Category == remDup[ptInd])
+    //console.log("filtered Arr here")
+    //console.log(filteredArr)
+   
+    for (i = 0; i < filteredArr.length; i++) {
+        //console.log()
+        productCategory.innerHTML += `<option>${filteredArr[i].Title}</option>`
     }
 
     let search = document.getElementById('search')
     search.disabled = false;
-    // fillProductType();
-    var pcInd = productCategory.selectedIndex
-    let productSpecs = Object.values(Object.values(products)[ptInd])[pcInd]
-    // console.log(productKeys, productValues, productSpecs)
+}
 
-    let specsTitle = Object.keys(productSpecs)
-    let specsValues = Object.values(productSpecs)
-    // console.log(specsValues)
-    let values = document.getElementById('values')
-    for (i = 0; i < specsValues.length; i++) {
-        var li = document.createElement('li')
-        var lip = document.createElement('p')
-        lip.innerHTML = (specsValues[i])
-        li.appendChild(lip)
-        values.appendChild(li)
+
+function searchfunc() {
+
+    let dispResult = document.getElementById("dispResult")
+    let imgResult= document.getElementById("imgResult")
+    dispResult.innerHTML = ""
+    imgResult.innerHTML=""
+    //console.log(dispResult)
+    pcInd = productCategory.selectedIndex
+
+    searchedProd = filteredArr[pcInd]
+    let specsTitle = Object.keys(searchedProd)
+    let specsValues = Object.values(searchedProd)
+    //console.log(specsTitle, specsValues)
+
+    for (i = 0; i < specsTitle.length-1; i++) {
+        //console.log("loop working")
+        dispResult.innerHTML += `<p>${specsTitle[i]} : ${specsValues[i]}<br></p>`
 
     }
-    productCategory.innerHTML = ""
+
+
+    imgResult.innerHTML += `<img src=${specsValues[specsValues.length - 1]} alt="">
+            `
 
 }
 
+ 
